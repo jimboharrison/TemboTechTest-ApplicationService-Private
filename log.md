@@ -1,6 +1,7 @@
 # Log
 
 ## Asummptions
+1. IoC container would be setup in each of the products project files or entry points. 
 ### Initial Assumptions
 1. Since Services.AdministratorOne.Abstractions is a third party library, then so must be Services.AdministratorTwo.Abstractions. Because of this I will not touch these projects but try to use the interfaces provided in respective products...
 ## Decisions
