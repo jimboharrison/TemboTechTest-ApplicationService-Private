@@ -18,6 +18,7 @@ namespace Console.ProductOne.Services
 
         /// <summary>
         /// This method would be easily changable if we wanted to swap clients. We would just need to replace the below with 3 seperate calls to the client
+        /// This probably does not need to live in common for now since it will only be used by the ProductOne
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
