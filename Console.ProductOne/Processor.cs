@@ -32,10 +32,17 @@ namespace Console.ProductOne
             //More validation here Validation + Argument checking here 
 
             var isValidPayment = _paymentValidator.IsMinimumPayment(application.Payment.Amount.Amount, 0.99m);
-            if (!isValidPayment) return; // would likely return a bad result or throw exception here to be caught and processed. Need to inform user why it failed
+            if (!isValidPayment) {
+                await _bus.PublishAsync(new ApplicationDenied(application.Id, "Does not meet minimum payment"));
+                return; 
+            }
 
             var isValidAge = _applicantValidator.IsValidAge(application.Applicant.DateOfBirth, 18, 39);
-            if(!isValidAge) return;
+            if (!isValidAge)
+            {
+                await _bus.PublishAsync(new ApplicationDenied(application.Id, "Invalid Date of Birth"));
+                return;
+            }
 
             throw new NotImplementedException();
         }
