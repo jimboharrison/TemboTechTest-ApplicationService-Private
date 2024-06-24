@@ -2,8 +2,11 @@
 
 ## Asummptions
 1. IoC container would be setup in each of the products project files or entry points. 
+2. Is Kyc service returns a IsSuccess=false can assume that Kyc check is a fail but should fail nicely.
 ### Initial Assumptions
 1. Since Services.AdministratorOne.Abstractions is a third party library, then so must be Services.AdministratorTwo.Abstractions. Because of this I will not touch these projects but try to use the interfaces provided in respective products...
+
+
 ## Decisions
 1. Testing - Probably out of scope given time and challenge. Plenty of logic to verify so lends itself to simple unit tests.
 2. Seperate projects for each product to illustrate two potential completely seperate code bases or repo's
