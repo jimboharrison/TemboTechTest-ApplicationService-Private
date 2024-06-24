@@ -25,4 +25,5 @@
         2. Minimum payment amount
     3. IsVerified check before proceeding to process user
     4. Include domain events at each major step
+2. Abstract the call to AdministrationService a service that returns a common type so that it can easily be swapped out if required
 
