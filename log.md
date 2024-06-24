@@ -7,6 +7,7 @@
 ## Decisions
 1. Testing - Probably out of scope given time and challenge. Plenty of logic to verify so lends itself to simple unit tests.
 2. Seperate projects for each product to illustrate two potential completely seperate code bases or repo's
+3. Due to time, decided against abstracting the validation age range and payment values into a config file. Hardcoded in product processors for now 
 ## Observations
 
 
