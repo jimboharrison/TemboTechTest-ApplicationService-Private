@@ -17,8 +17,8 @@ namespace Console.ProductOne
         public Processor(IAdministrationService administrationService,
             IBus bus,
             IKycService kyycService,
-            IPaymentValidator paymentValidator
-            , IApplicantValidator applicantValidator)
+            IPaymentValidator paymentValidator,
+            IApplicantValidator applicantValidator)
         {
             _administrationService = administrationService ?? throw new NullReferenceException(nameof(administrationService));
             _bus = bus ?? throw new NullReferenceException(nameof(bus));
@@ -44,7 +44,32 @@ namespace Console.ProductOne
                 return;
             }
 
+            var isVerified = await GetVerification(application.Applicant);
+
+            if (!isVerified) 
+            {
+                await _bus.PublishAsync(new ApplicationDenied(application.Id, "KYC checks failed"));
+                return;
+            }
+
+            
+
             throw new NotImplementedException();
+        }
+
+        private async Task<bool> GetVerification(User applicant)
+        {
+            if (applicant.IsVerified.HasValue && applicant.IsVerified.Value) return true;
+
+            var kycResult = await _kycService.GetKycReportAsync(applicant);
+
+            if (!kycResult.IsSuccess)
+            {
+                //log something here to indicate
+                return false;
+            }
+
+            return kycResult.Value.IsVerified;
         }
     }
 }
