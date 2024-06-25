@@ -36,3 +36,8 @@
 1. Both products are abstracted into seperate Console app projects. Looking back, probably not needed to good to demonstrate how these processors may be consumed with a very dummy example of some DI being setup ( not included all services, only examples )
 2. AdministratorOne is a third party so have included a wrapper and known types. AdministratorTwo I have assumed is already a wrapper around an external library so have consumed this directly in the product processor code
 
+### If I had more time
+
+1. Unit testing for logic and validation 
+2. Abstract out the validation values into a DB or at least config file. Ideally some sort of storage that can be managed outside of product releases.
+3. Requirements for exactly what the Products were processing is unclear. It is dealing with money, so assumption is it needs to be secure. If consumed by API would need to handle this. Out of scope for task requirements though.
