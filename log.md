@@ -5,7 +5,8 @@
 2. Is Kyc service returns a IsSuccess=false can assume that Kyc check is a fail but should fail nicely.
 3. A single application is for a specific product. have assumed validation that checks the correct productType on application
 ### Initial Assumptions
-1. Since Services.AdministratorOne.Abstractions is a third party library, then so must be Services.AdministratorTwo.Abstractions. Because of this I will not touch these projects but try to use the interfaces provided in respective products...
+1. Since Services.AdministratorOne.Abstractions is a third party library, it looks like Services.AdministratorTwo.Abstractions is an internal wrapper to an external third party. Will not touch either of these products but it will affect how I implement each product app.
+2. Will not change the return type of the IApplicationProcessor.Process method. Ideally for failure we would want to throw an exception and catch or return a nice error to user. Not sure how this product is consumed so will leave for now.
 
 
 ## Decisions
@@ -15,6 +16,7 @@
 4. Added a common response type for CreateInvestorAndProcessPayment so that external third party types are not required inside product domain code 
 ## Observations
 1. Initial payment on the Application object is a decimal. This implies that users can make payments in decimal however AdministratorOne only accepts integer values. Would need to either assume some rounding here OR validate that the input can be parsed to a int.
+2. The 99p minimum payment could and should be extracted into a config file. For now I have gone with the rule of 2/3. Since its only repeated twice, this is okay.
 
 ## Todo
 
@@ -28,4 +30,9 @@
     3. IsVerified check before proceeding to process user
     4. Include domain events at each major step
 2. Abstract the call to AdministrationService a service that returns a common type so that it can easily be swapped out if required
+
+
+## James Notes
+1. Both products are abstracted into seperate Console app projects. Looking back, probably not needed to good to demonstrate how these processors may be consumed with a very dummy example of some DI being setup ( not included all services, only examples )
+2. AdministratorOne is a third party so have included a wrapper and known types. AdministratorTwo I have assumed is already a wrapper around an external library so have consumed this directly in the product processor code
 

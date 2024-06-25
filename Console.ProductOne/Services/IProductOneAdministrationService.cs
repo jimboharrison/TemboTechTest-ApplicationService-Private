@@ -1,4 +1,5 @@
-﻿using Services.Common.Abstractions.Model;
+﻿using Console.ProductOne.Models;
+using Services.Common.Abstractions.Model;
 
 namespace Console.ProductOne.Services
 {

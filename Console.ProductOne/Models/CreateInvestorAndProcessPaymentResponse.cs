@@ -1,4 +1,4 @@
-﻿namespace Services.Common.Abstractions.Model
+﻿namespace Console.ProductOne.Models
 {
     public class CreateInvestorAndProcessPaymentResponse
     {

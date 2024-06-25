@@ -1,4 +1,5 @@
-﻿using Services.AdministratorOne.Abstractions;
+﻿using Console.ProductOne.Models;
+using Services.AdministratorOne.Abstractions;
 using Services.AdministratorOne.Abstractions.Model;
 using Services.Common.Abstractions.Model;
 
