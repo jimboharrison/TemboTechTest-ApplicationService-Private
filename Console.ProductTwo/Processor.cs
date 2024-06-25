@@ -44,7 +44,7 @@ namespace Console.ProductTwo
 
             if (!createAccountResult.IsSuccess) 
             {
-                await _bus.PublishAsync(new AccountCreationFailed(createInvestorResult.Value.ToString(), ProductCode.ProductTwo));
+                await _bus.PublishAsync(new AccountCreationFailed(application.Applicant.Id, createInvestorResult.Value.ToString(), ProductCode.ProductTwo));
                 return;
             }
 

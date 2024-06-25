@@ -1,6 +1,7 @@
 ﻿using Console.ProductOne.Models;
 using Services.AdministratorOne.Abstractions;
 using Services.AdministratorOne.Abstractions.Model;
+using Services.Common.Abstractions.Abstractions;
 using Services.Common.Abstractions.Model;
 
 namespace Console.ProductOne.Services
@@ -11,10 +12,12 @@ namespace Console.ProductOne.Services
     internal class ProductOneAdministrationService : IProductOneAdministrationService
     {
         private readonly IAdministrationService _administrationService;
+        private readonly IBus _bus;
 
-        public ProductOneAdministrationService(IAdministrationService administrationService)
+        public ProductOneAdministrationService(IAdministrationService administrationService, IBus bus)
         {
             _administrationService = administrationService;
+            _bus = bus;
         }
 
         /// <summary>
@@ -23,7 +26,7 @@ namespace Console.ProductOne.Services
         /// </summary>
         /// <param name="application"></param>
         /// <returns></returns>
-        public Result<CreateInvestorAndProcessPaymentResponse> ProcessPayment(Application application)
+        public async Task<Result<CreateInvestorAndProcessPaymentResponse>> ProcessPayment(Application application)
         {
             var applicant = application.Applicant;
             var firstAddress = application.Applicant.Addresses.First();
@@ -60,6 +63,16 @@ namespace Console.ProductOne.Services
             }
             catch (AdministratorException ex)
             {
+                //probably best to handle the domain events in the processor instead of here, but as an example...
+                if (ex.Code == ErrorCodes.InvestorError)
+                    await _bus.PublishAsync(new InvestorCreationFailed(applicant.Id));
+
+                if (ex.Code == ErrorCodes.AccountError)
+                    await _bus.PublishAsync(new AccountCreationFailed(applicant.Id, null, ProductCode.ProductTwo));
+
+                if (ex.Code == ErrorCodes.PaymentError)
+                    await _bus.PublishAsync(new PaymentFailed(null, null, application.Id));
+
                 //will assume if any exception then the whole process has failed
                 return Result.Failure<CreateInvestorAndProcessPaymentResponse>(new Error("system", ex.Code, "Admin service failed"));
             }

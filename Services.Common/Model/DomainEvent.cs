@@ -8,7 +8,7 @@ public record InvestorCreationFailed(Guid UserId) : DomainEvent;
 
 public record AccountCreated(string InvestorId, ProductCode Product, string AccountId) : DomainEvent;
 
-public record AccountCreationFailed(string InvestorId, ProductCode Product) : DomainEvent;
+public record AccountCreationFailed(Guid userId, string InvestorId, ProductCode Product) : DomainEvent;
 
 public record KycFailed(Guid UserId, Guid ReportId) : DomainEvent;
 

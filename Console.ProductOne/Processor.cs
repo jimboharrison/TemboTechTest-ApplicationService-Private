@@ -38,13 +38,10 @@ namespace Console.ProductOne
 
             if (!isVerified) return;
 
-            var processPaymentResponse = _administrationService.ProcessPayment(application);
+            var processPaymentResponse =  await _administrationService.ProcessPayment(application);
 
             if (!processPaymentResponse.IsSuccess)
-            {
-                //maybe raise a domain event with error code??
                 return;
-            }
 
             //would be nicer to merge these into a single event for product one but will keep them split since product two does individually
             await _bus.PublishAsync(new InvestorCreated(application.Applicant.Id, processPaymentResponse.Value.InvestorId));
