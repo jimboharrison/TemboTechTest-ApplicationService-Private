@@ -41,3 +41,4 @@
 1. Unit testing for logic and validation 
 2. Abstract out the validation values into a DB or at least config file. Ideally some sort of storage that can be managed outside of product releases.
 3. Requirements for exactly what the Products were processing is unclear. It is dealing with money, so assumption is it needs to be secure. If consumed by API would need to handle this. Out of scope for task requirements though.
+4. Would ideally like to change the resposne type of Process method to be some sort of ServiceResult<> instead of just returning empty if any step fails. This way, if an API was the entry point for example, we could return badRequests / Forbiddens / 200 etc.
